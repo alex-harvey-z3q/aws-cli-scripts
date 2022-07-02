@@ -2,28 +2,6 @@
 
 My collection of AWS CLI helpers. These are all the AWS CLI helpers I have written over the years that I find frequently useful.
 
-#### Table of contents
-
-1. [delete_bucket.sh](#delete_bucketsh)
-    * [Overview](#overview)
-    * [Installation](#installation)
-    * [Usage](#usage)
-        - [Help message](#help-message)
-        - [Delete a bucket](#delete-a-bucket)
-        - [Delete a bucket with versions](#delete-a-bucket-with-versions)
-        - [Delete a bucket and all its data and versions](#delete-a-bucket-and-all-its-data-and-versions)
-2. [manage_secrets.sh](#manage_secretssh)
-    * [Overview](#overview-2)
-    * [Usage](#usage-2)
-        - [Help message](#help-message-2)
-        - [List secrets](#list-secrets)
-        - [Create a secret](#create-a-secret)
-        - [Update a secret](#update-a-secret)
-        - [Get a secret value](#get-a-secret-value)
-        - [Rotate a secret](#rotate-a-secret)
-        - [Delete a secret](#delete-a-secret)
-3. [License](#license)
-
 
 ## delete_bucket.sh
 
@@ -138,6 +116,29 @@ This presumes you have set up the [rotation](https://docs.aws.amazon.com/secrets
 
 ```text
 ▶ SECRET_NAME='foo' manage_secrets.sh -d
+```
+
+## revoke_rules.sh
+
+A script to clean out SGs in an SG that cannot be deleted due to dependent objects.
+
+### Installation
+
+To install, just download the script:
+
+```text
+▶ curl \
+  https://raw.githubusercontent.com/alexharv074/aws-cli-scripts/master/revoke_rules.sh \
+    -o /usr/local/bin/revoke_rules.sh
+```
+
+### Usage
+
+#### Help message
+
+```text
+▶ bash revoke_rules.sh -h 
+Usage: bash revoke_rules.sh [-h] SG_ID
 ```
 
 ## License

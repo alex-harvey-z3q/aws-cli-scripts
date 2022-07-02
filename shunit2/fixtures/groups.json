@@ -1,0 +1,58 @@
+{
+    "SecurityGroups": [
+        {
+            "Description": "Security Group for Foo",
+            "IpPermissions": [],
+            "GroupId": "sg-11111111",
+            "IpPermissionsEgress": [
+                {
+                    "FromPort": 80,
+                    "IpProtocol": "tcp",
+                    "IpRanges": [
+                        {
+                            "CidrIp": "10.140.6.112/32",
+                            "Description": "foo"
+                        },
+                        {
+                            "CidrIp": "10.140.6.159/32",
+                            "Description": "bar"
+                        }
+                    ],
+                    "Ipv6Ranges": [],
+                    "PrefixListIds": [],
+                    "ToPort": 80,
+                    "UserIdGroupPairs": []
+                },
+                {
+                    "FromPort": 49152,
+                    "IpProtocol": "udp",
+                    "IpRanges": [
+                        {
+                            "CidrIp": "10.23.99.20/32",
+                            "Description": "baz"
+                        },
+                        {
+                            "CidrIp": "10.22.199.21/32",
+                            "Description": "qux"
+                        }
+                    ],
+                    "Ipv6Ranges": [],
+                    "PrefixListIds": [],
+                    "ToPort": 65535,
+                    "UserIdGroupPairs": []
+                }
+            ],
+            "Tags": [
+                {
+                    "Key": "Name",
+                    "Value": "Foo"
+                },
+                {
+                    "Key": "aws:cloudformation:logical-id",
+                    "Value": "FooStack"
+                }
+            ],
+            "VpcId": "vpc-11111111"
+        }
+    ]
+}

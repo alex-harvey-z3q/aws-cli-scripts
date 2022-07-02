@@ -2,6 +2,31 @@
 
 My collection of AWS CLI helpers. These are all the AWS CLI helpers I have written over the years that I find frequently useful.
 
+#### Table of contents
+
+1. [delete_bucket.sh](#delete_bucketsh)
+    * [Overview](#overview)
+    * [Installation](#installation)
+    * [Usage](#usage)
+        - [Help message](#help-message)
+        - [Delete a bucket](#delete-a-bucket)
+        - [Delete a bucket with versions](#delete-a-bucket-with-versions)
+        - [Delete a bucket and all its data and versions](#delete-a-bucket-and-all-its-data-and-versions)
+2. [manage_secrets.sh](#manage_secretssh)
+    * [Overview](#overview-2)
+    * [Usage](#usage-2)
+        - [Help message](#help-message-2)
+        - [List secrets](#list-secrets)
+        - [Create a secret](#create-a-secret)
+        - [Update a secret](#update-a-secret)
+        - [Get a secret value](#get-a-secret-value)
+        - [Rotate a secret](#rotate-a-secret)
+        - [Delete a secret](#delete-a-secret)
+3. [revoke_rules.sh](#revoke_rulessh)
+    * [Installation](#installation-2)
+    * [Usage](#usage-3)
+        - [Help message](#help-message-3)
+4. [License](#license)
 
 ## delete_bucket.sh
 

@@ -91,8 +91,13 @@ This is a shell script wrapper for AWS Secrets Manager, exposing commonly-needed
 
 ```text
 ▶ manage_secrets.sh -h
-Usage: [SECRET_NAME=secret_name] [SECRET_DESC='secret desc'] [SECRET=xxxx] manage_secrets.sh [-hlgcrud]
-Lists, creates, updates, rotates, or deletes a secret.
+Usage: manage_secrets.sh [-h] [-l]
+Usage: manage_secrets.sh -g SECRET_NAME
+Usage: manage_secrets.sh -c SECRET_NAME -D SECRET_DESC -s SECRET
+Usage: manage_secrets.sh -r SECRET_NAME
+Usage: manage_secrets.sh -u SECRET_NAME -s SECRET
+Usage: manage_secrets.sh -d SECRET_NAME
+Lists (-l), creates (-c), updates (-u), rotates (-r), or deletes (-d) a secret.
 ```
 
 #### List secrets
@@ -108,24 +113,21 @@ Lists, creates, updates, rotates, or deletes a secret.
 #### Create a secret
 
 ```text
-▶ SECRET_DESC='my secret' SECRET_NAME='foo' SECRET='xxx' manage_secrets.sh -c
-{
-    "ARN": "arn:aws:secretsmanager:ap-southeast-2:901798091585:secret:foo-qs8nQ3",
-    "Name": "foo",
-    "VersionId": "f1d7b305-5a75-4b75-a07a-da08a0991715"
-}
+▶ manage_secrets.sh -c foo -D 'my secret' -s xxx
+arn:aws:secretsmanager:ap-southeast-2:901798091585:secret:foo-qs8nQ3    foo     f1d7b305-5a75-4b75-a07a-da08a0991715
 ```
 
 #### Update a secret
 
 ```text
-▶ SECRET_NAME='foo' SECRET='yyy' manage_secrets.sh -u
+▶ manage_secrets.sh -u foo -s yyy
+arn:aws:secretsmanager:ap-southeast-2:901798091585:secret:foo-qs8nQ3    foo     f1d7b305-5a75-4b75-a07a-da08a0991715
 ```
 
 #### Get a secret value
 
 ```text
-▶ SECRET_NAME='foo' manage_secrets.sh -g
+▶ manage_secrets.sh -g foo
 yyy
 ```
 
@@ -134,13 +136,14 @@ yyy
 This presumes you have set up the [rotation](https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotating-secrets.html) Lambda.
 
 ```text
-▶ SECRET_NAME='foo' manage_secrets.sh -r
+▶ manage_secrets.sh -r foo
 ```
 
 #### Delete a secret
 
 ```text
-▶ SECRET_NAME='foo' manage_secrets.sh -d
+▶ manage_secrets.sh -d foo
+arn:aws:secretsmanager:ap-southeast-2:901798091585:secret:foo-qs8nQz    2022-08-02T01:43:05.664000+10:00        foo
 ```
 
 ## revoke_rules.sh

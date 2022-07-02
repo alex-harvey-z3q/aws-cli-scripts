@@ -21,13 +21,12 @@ get_opts() {
       h) usage ;;
       D) secret_desc="$OPTARG" ;;
       s) secret="$OPTARG" ;;
-      l) command+=(list-secrets     --query      'SecretList[].Name') ;;
+      l) command+=(list-secrets     --query      'SecretList[].[Name,Description]') ;;
       g) command+=(get-secret-value --secret-id  "$OPTARG") ;;
       c) command+=(create-secret    --name       "$OPTARG") ;;
       r) command+=(rotate-secret    --secret-id  "$OPTARG") ;;
       u) command+=(update-secret    --secret-id  "$OPTARG") ;;
       d) command+=(delete-secret    --secret-id  "$OPTARG") ;;
-
       \?) echo "ERROR: Invalid option -$OPTARG"
         usage ;;
     esac
@@ -48,8 +47,7 @@ post_process_opts() {
 
   if grep -q "create-secret" <<< "${command[@]}" ; then
     [ -z "$secret" ] && usage
-    [ -n "$secret_desc" ] && \
-      command+=(--description "$secret_desc")
+    [ -n "$secret_desc" ] && command+=(--description "$secret_desc")
     command+=(--secret-string "$secret")
   fi
 
@@ -70,5 +68,3 @@ main() {
 if [ "$0" == "${BASH_SOURCE[0]}" ] ; then
   main "$@"
 fi
-
-# vim: set ft=sh:

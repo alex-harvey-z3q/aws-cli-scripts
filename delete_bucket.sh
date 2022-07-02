@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 usage() {
-  echo "Usage: bash $0 [-vd] BUCKET"
+  echo "Usage: $0 [-vd] BUCKET"
   echo "  -v: also delete versions"
   echo "  -d: also delete data"
   exit 1

@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
+export AWS_DEFAULT_OUTPUT="text"
+
 usage() {
-  echo "Usage: bash $0 [-h] [-l]
-Usage: bash $0 -g SECRET_NAME
-Usage: bash $0 -c SECRET_NAME -D SECRET_DESC -s SECRET
-Usage: bash $0 -r SECRET_NAME
-Usage: bash $0 -u SECRET_NAME -s SECRET
-Usage: bash $0 -d SECRET_NAME
+  echo "Usage: $0 [-h] [-l]
+Usage: $0 -g SECRET_NAME
+Usage: $0 -c SECRET_NAME -D SECRET_DESC -s SECRET
+Usage: $0 -r SECRET_NAME
+Usage: $0 -u SECRET_NAME -s SECRET
+Usage: $0 -d SECRET_NAME
 Lists (-l), creates (-c), updates (-u), rotates (-r), or deletes (-d) a secret."
   exit 1
 }

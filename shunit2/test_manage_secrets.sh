@@ -11,7 +11,7 @@ aws() { : ; }
 test_list_secrets() {
   main -l
   assertEquals "aws secretsmanager list-secrets --query \
-SecretList[].Name" "${command[*]}"
+SecretList[].[Name,Description]" "${command[*]}"
 }
 
 test_get_secret() {

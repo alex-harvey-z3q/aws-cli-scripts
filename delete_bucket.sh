@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# A script to forcefully delete an S3 bucket, optionally including its data and versions.
+
 usage() {
   echo "Usage: $0 [-vd] BUCKET"
   echo "  -v: also delete versions"

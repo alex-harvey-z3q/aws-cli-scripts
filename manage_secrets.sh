@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# This is a shell script wrapper for AWS Secrets Manager, exposing commonly-needed options in an easy-to-use interface.
+
 export AWS_DEFAULT_OUTPUT="text"
 
 usage() {

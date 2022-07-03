@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+# This is a shell script wrapper for AWS System Manager, exposing commonly-needed options in an easy-to-use interface.
 
 export AWS_DEFAULT_OUTPUT="text"
 

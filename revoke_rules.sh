@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
-# Code to clean out SGs in an SG that cannot be deleted
-# due to dependent objects.
-#
-# Usage: source $0 ; revoke_rules "sg-111111111"
+# A script to clean out SGs in an SG that cannot be deleted due to dependent objects.
 
 groups_temp=/tmp/"$(basename "$0")"."$$"
 

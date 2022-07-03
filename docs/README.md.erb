@@ -1,0 +1,20 @@
+# AWS CLI helpers
+
+My collection of AWS CLI helpers. These are all the AWS CLI helpers
+that I have written over the years that I find frequently useful.
+
+<%- Dir.glob("*.sh").each do |file_name| -%>
+## <%= file_name %>
+
+<%# Uses the 3rd line of the script as the doc_string. -%>
+<%= open(file_name).each_line.take(3).last.gsub(/^# /, "") -%>
+
+```text
+▶ bash <%= file_name %> -h
+<%= %x{bash #{file_name} -h} -%>
+```
+
+<%- end -%>
+## License
+
+MIT.

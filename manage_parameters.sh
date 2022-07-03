@@ -16,6 +16,7 @@ Lists (-l), creates (-c), gets (-g), or deletes (-d) a secret."
 }
 
 get_opts() {
+  local opt OPTIND OPTARG
   [ -z "$1" ] && usage
 
   cmd=(aws ssm)
@@ -29,10 +30,10 @@ get_opts() {
       g) cmd+=(get-parameters --name "$OPTARG" --with-decryption --query "Parameters[].Value") ;;
       s) cmd+=(--value "$OPTARG" --type "String") ;;
       d) cmd+=(delete-parameters --name "$OPTARG") ;;
-      # TODO. Add more features like delete etc here.
       \?) usage ;;
     esac
   done
+
   shift $((OPTIND-1))
 }
 

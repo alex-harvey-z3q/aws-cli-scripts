@@ -16,19 +16,21 @@ Lists (-l), creates (-c), updates (-u), rotates (-r), or deletes (-d) a secret."
 }
 
 get_opts() {
-  command=(aws secretsmanager)
+  local opt OPTARG OPTIND
+
+  cmd=(aws secretsmanager)
 
   while getopts "hD:s:lg:c:r:u:d:" opt ; do
     case $opt in
       h) usage ;;
       D) secret_desc="$OPTARG" ;;
       s) secret="$OPTARG" ;;
-      l) command+=(list-secrets     --query      'SecretList[].[Name,Description]') ;;
-      g) command+=(get-secret-value --secret-id  "$OPTARG") ;;
-      c) command+=(create-secret    --name       "$OPTARG") ;;
-      r) command+=(rotate-secret    --secret-id  "$OPTARG") ;;
-      u) command+=(update-secret    --secret-id  "$OPTARG") ;;
-      d) command+=(delete-secret    --secret-id  "$OPTARG") ;;
+      l) cmd+=(list-secrets     --query      'SecretList[].[Name,Description]') ;;
+      g) cmd+=(get-secret-value --secret-id  "$OPTARG") ;;
+      c) cmd+=(create-secret    --name       "$OPTARG") ;;
+      r) cmd+=(rotate-secret    --secret-id  "$OPTARG") ;;
+      u) cmd+=(update-secret    --secret-id  "$OPTARG") ;;
+      d) cmd+=(delete-secret    --secret-id  "$OPTARG") ;;
       \?) echo "ERROR: Invalid option -$OPTARG"
         usage ;;
     esac
@@ -36,30 +38,32 @@ get_opts() {
   shift $((OPTIND-1))
 }
 
+_in_cmd() {
+  grep -wq "$1" <<< "${cmd[@]}"
+}
+
 post_process_opts() {
-  [ "${#command[@]}" -eq 2 ] && usage
+  _in_cmd "list-secrets" && return
 
-  grep -q "list-secrets" <<< "${command[@]}" && return
-
-  if grep -q "get-secret-value" <<< "${command[@]}" ; then
+  if _in_cmd "get-secret-value" ; then
     [ -n "$secret" ] && usage
     [ -n "$secret_desc" ] && usage
-    command+=(--query 'SecretString' --output 'text')
+    cmd+=(--query 'SecretString' --output 'text')
   fi
 
-  if grep -q "create-secret" <<< "${command[@]}" ; then
+  if _in_cmd "create-secret" ; then
     [ -z "$secret" ] && usage
-    [ -n "$secret_desc" ] && command+=(--description "$secret_desc")
-    command+=(--secret-string "$secret")
+    [ -n "$secret_desc" ] && cmd+=(--description "$secret_desc")
+    cmd+=(--secret-string "$secret")
   fi
 
-  if grep -q "update-secret" <<< "${command[@]}" ; then
+  if _in_cmd "update-secret" ; then
     [ -z "$secret" ] && usage
-    command+=(--secret-string "$secret")
+    cmd+=(--secret-string "$secret")
   fi
 }
 
-manage_secret() { "${command[@]}" ; }
+manage_secret() { "${cmd[@]}" ; }
 
 main() {
   get_opts "$@"

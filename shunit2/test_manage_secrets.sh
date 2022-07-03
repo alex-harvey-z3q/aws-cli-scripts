@@ -4,20 +4,18 @@ under_test='./manage_secrets.sh'
 
 setUp() { . "$under_test" ; }
 
-tearDown() { unset OPTIND ; }
-
 aws() { : ; }
 
 test_list_secrets() {
   main -l
   assertEquals "aws secretsmanager list-secrets --query \
-SecretList[].[Name,Description]" "${command[*]}"
+SecretList[].[Name,Description]" "${cmd[*]}"
 }
 
 test_get_secret() {
   main -g 'foo'
   assertEquals "aws secretsmanager get-secret-value \
---secret-id foo --query SecretString --output text" "${command[*]}"
+--secret-id foo --query SecretString --output text" "${cmd[*]}"
 }
 
 test_get_secret_unwanted_desc_passed() {
@@ -43,31 +41,31 @@ test_create_with_desc() {
 test_create_and_secret() {
   main -c 'foo' -s 'xxx'
   assertEquals "aws secretsmanager create-secret \
---name foo --secret-string xxx" "${command[*]}"
+--name foo --secret-string xxx" "${cmd[*]}"
 }
 
 test_create_with_desc_and_secret() {
-  SECRET_NAME='foo' SECRET_DESC='my desc' SECRET='xxx' main -c 'foo' -D 'my desc' -s 'xxx'
+  main -c 'foo' -D 'my desc' -s 'xxx'
   assertEquals "aws secretsmanager create-secret \
---name foo --description my desc --secret-string xxx" "${command[*]}"
+--name foo --description my desc --secret-string xxx" "${cmd[*]}"
 }
 
 test_rotate_secret() {
   main -r 'foo'
   assertEquals "aws secretsmanager \
-rotate-secret --secret-id foo" "${command[*]}"
+rotate-secret --secret-id foo" "${cmd[*]}"
 }
 
 test_delete_secret_name_only() {
   main -d 'foo'
   assertEquals "aws secretsmanager \
-delete-secret --secret-id foo" "${command[*]}"
+delete-secret --secret-id foo" "${cmd[*]}"
 }
 
 test_update_secret_name_and_secret() {
   main -u 'foo' -s 'xxx'
   assertEquals "aws secretsmanager update-secret --secret-id foo \
---secret-string xxx" "${command[*]}"
+--secret-string xxx" "${cmd[*]}"
 }
 
 . shunit2

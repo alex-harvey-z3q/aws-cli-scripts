@@ -3,12 +3,20 @@
 My collection of AWS CLI helpers. These are all the AWS CLI helpers
 that I have written over the years that I find frequently useful.
 
+## Install
+
+Run the installer:
+
+```text
+▶ make install
+```
+
 ## manage_secrets.sh
 
 This is a shell script wrapper for AWS Secrets Manager, exposing commonly-needed options in an easy-to-use interface.
 
 ```text
-▶ bash manage_secrets.sh -h
+▶ manage_secrets.sh -h
 Usage: manage_secrets.sh [-h] [-l]
 Usage: manage_secrets.sh -g SECRET_NAME
 Usage: manage_secrets.sh -c SECRET_NAME -D SECRET_DESC -s SECRET
@@ -23,7 +31,7 @@ Lists (-l), creates (-c), updates (-u), rotates (-r), or deletes (-d) a secret.
 This is a shell script wrapper for AWS System Manager, exposing commonly-needed options in an easy-to-use interface.
 
 ```text
-▶ bash manage_parameters.sh -h
+▶ manage_parameters.sh -h
 Usage: manage_parameters.sh [-h] [-l]
 Usage: manage_parameters.sh -l
 Usage: manage_parameters.sh -c SECRET_NAME -s SECRET [-o]
@@ -38,7 +46,7 @@ Lists (-l), creates (-c), gets (-g), or deletes (-d) a secret.
 A script to forcefully delete an S3 bucket, optionally including its data and versions.
 
 ```text
-▶ bash delete_bucket.sh -h
+▶ delete_bucket.sh -h
 Usage: delete_bucket.sh [-vd] BUCKET
   -v: also delete versions
   -d: also delete data
@@ -49,7 +57,7 @@ Usage: delete_bucket.sh [-vd] BUCKET
 A script to clean out SGs in an SG that cannot be deleted due to dependent objects.
 
 ```text
-▶ bash revoke_rules.sh -h
+▶ revoke_rules.sh -h
 Usage: bash revoke_rules.sh [-h] SG_ID
 ```
 

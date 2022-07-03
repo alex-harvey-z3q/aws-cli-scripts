@@ -5,7 +5,7 @@
 groups_temp=/tmp/"$(basename "$0")"."$$"
 
 usage() {
-  echo "Usage: bash $0 [-h] SG_ID"
+  echo "Usage: $0 [-h] SG_ID"
   exit 1
 }
 

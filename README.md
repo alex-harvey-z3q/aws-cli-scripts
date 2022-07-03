@@ -58,7 +58,7 @@ A script to clean out SGs in an SG that cannot be deleted due to dependent objec
 
 ```text
 ▶ revoke_rules.sh -h
-Usage: bash revoke_rules.sh [-h] SG_ID
+Usage: revoke_rules.sh [-h] SG_ID
 ```
 
 ## License

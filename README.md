@@ -1,6 +1,7 @@
 # AWS CLI helpers
 
-My collection of AWS CLI helpers. These are all the AWS CLI helpers I have written over the years that I find frequently useful.
+My collection of AWS CLI helpers. These are all the AWS CLI helpers
+that I have written over the years that I find frequently useful.
 
 ## manage_secrets.sh
 
@@ -15,18 +16,6 @@ Usage: manage_secrets.sh -r SECRET_NAME
 Usage: manage_secrets.sh -u SECRET_NAME -s SECRET
 Usage: manage_secrets.sh -d SECRET_NAME
 Lists (-l), creates (-c), updates (-u), rotates (-r), or deletes (-d) a secret.
-```
-
-## install.sh
-
-this_script="$(basename "$0")"
-
-```text
-▶ bash install.sh -h
-cp delete_bucket.sh /usr/local/bin
-cp manage_parameters.sh /usr/local/bin
-cp manage_secrets.sh /usr/local/bin
-cp revoke_rules.sh /usr/local/bin
 ```
 
 ## manage_parameters.sh

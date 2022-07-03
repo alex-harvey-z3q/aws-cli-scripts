@@ -3,7 +3,7 @@
 My collection of AWS CLI helpers. These are all the AWS CLI helpers
 that I have written over the years that I find frequently useful.
 
-<%- Dir.glob("*.sh").each do |file_name| -%>
+<%- Dir.glob("*sh").delete_if {|x| x =~ /install.sh/}.each do |file_name| -%>
 ## <%= file_name %>
 
 <%# Uses the 3rd line of the script as the doc_string. -%>

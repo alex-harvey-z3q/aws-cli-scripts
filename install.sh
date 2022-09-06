@@ -8,11 +8,10 @@ if [[ "$current_dir" != "aws-cli-scripts" ]] ; then
 fi
 
 _cp() {
-  echo "cp $*"
-  cp $*
+  (set -x ; cp $*)
 }
 
-for file_name in *.sh ; do
+for file_name in *.sh *.awk ; do
   [[ "$file_name" == "$this_script" ]] && continue
   _cp "$file_name" /usr/local/bin
 done

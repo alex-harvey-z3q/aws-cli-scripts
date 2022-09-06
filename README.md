@@ -1,6 +1,6 @@
-# AWS CLI helpers
+# AWS helpers
 
-My collection of AWS CLI helpers. These are all the AWS CLI helpers
+My collection of AWS helper scripts. These are scripts
 that I have written over the years that I find frequently useful.
 
 ## Install
@@ -59,6 +59,14 @@ A script to clean out SGs in an SG that cannot be deleted due to dependent objec
 ```text
 ▶ revoke_rules.sh -h
 Usage: revoke_rules.sh [-h] SG_ID
+```
+
+## spacing.awk
+
+An AWK script that can reset spacing in a CloudFormation YAML template in a visually appealing way.
+
+```text
+▶ spacing.awk YAML_FILE > temp ; mv temp TAML_FILE
 ```
 
 ## License

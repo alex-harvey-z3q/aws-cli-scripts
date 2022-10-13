@@ -22,8 +22,6 @@ get_caller_identity() {
 }
 
 assume_role() {
-  printf "Assuming cross account role\n"
-
   set -x
 
   read -r \

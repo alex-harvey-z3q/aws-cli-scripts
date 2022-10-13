@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# A script to be sourced to automate assume role.
+# A script to be sourced to automate assume role. Use -u for unassume role.
 
 usage() {
   echo "Usage: . $0 ROLE [-u]"

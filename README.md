@@ -54,7 +54,7 @@ Usage: delete_bucket.sh [-vd] BUCKET
 
 ## assume_role.sh
 
-A script to be sourced to automate assume role.
+A script to be sourced to automate assume role. Use -u for unassume role.
 
 ```text
 ▶ assume_role.sh -h

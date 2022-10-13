@@ -52,6 +52,15 @@ Usage: delete_bucket.sh [-vd] BUCKET
   -d: also delete data
 ```
 
+## assume_role.sh
+
+A script to be sourced to automate assume role.
+
+```text
+▶ assume_role.sh -h
+Usage: . assume_role.sh ROLE [-u]
+```
+
 ## revoke_rules.sh
 
 A script to clean out SGs in an SG that cannot be deleted due to dependent objects.

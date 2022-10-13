@@ -8,7 +8,7 @@ usage() {
 }
 
 validate_role() {
-  if ! grep -Eq "arn:aws:iam::[0-9]+:role/.+" <<< "$role" ; then
+  if ! grep -Eq "arn:aws:iam::[0-9]{12}:role/.+" <<< "$role" ; then
     echo "Your role $role looks wrong"
     return 1
   fi
@@ -17,25 +17,24 @@ validate_role() {
 }
 
 get_caller_identity() {
-  printf "Your new role\n"
-  aws sts get-caller-identity
+  printf "Your new role:\n"
+  (set -x ; aws sts get-caller-identity)
+}
+
+_assume_role() {
+  (set -x ; aws sts assume-role \
+      --role-arn "$role" \
+      --role-session-name "Session" \
+      --output "json")
 }
 
 assume_role() {
-  set -x
-
   read -r \
     AWS_ACCESS_KEY_ID \
     AWS_SECRET_ACCESS_KEY \
     AWS_SECURITY_TOKEN \
-  <<< \
-    "$(
-  \
-    aws sts assume-role \
-      --role-arn "$role" \
-      --role-session-name 'Session' | \
-  \
-    jq -r '
+  <<< "$(
+    _assume_role | jq -r '
       .Credentials
       | [
           .AccessKeyId,
@@ -50,22 +49,16 @@ assume_role() {
     AWS_SECRET_ACCESS_KEY \
     AWS_SECURITY_TOKEN
 
-  set +x
-
   get_caller_identity
 }
 
 unassume_role() {
   printf "Resuming original role\n"
 
-  set -x
-
   unset \
     AWS_ACCESS_KEY_ID \
     AWS_SECRET_ACCESS_KEY \
     AWS_SECURITY_TOKEN
-
-  set +x
 
   get_caller_identity
 }

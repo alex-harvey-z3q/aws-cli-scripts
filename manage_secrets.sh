@@ -17,6 +17,7 @@ Lists (-l), creates (-c), updates (-u), rotates (-r), or deletes (-d) a secret."
 
 get_opts() {
   local opt OPTARG OPTIND
+  [ -z "$1" ] && usage
 
   cmd=(aws secretsmanager)
 

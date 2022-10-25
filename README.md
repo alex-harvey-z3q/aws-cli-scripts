@@ -34,8 +34,8 @@ This is a shell script wrapper for AWS System Manager, exposing commonly-needed 
 ▶ manage_parameters.sh -h
 Usage: manage_parameters.sh [-h] [-l]
 Usage: manage_parameters.sh -l
-Usage: manage_parameters.sh -c SECRET_NAME -s SECRET [-o]
-Usage: manage_parameters.sh -c SECRET_NAME -s file://MYSECRET_FILE [-o]
+Usage: manage_parameters.sh -c SECRET_NAME -s SECRET [-o] [-t TIER]
+Usage: manage_parameters.sh -c SECRET_NAME -s file://MYSECRET_FILE [-o] [-t TIER]
 Usage: manage_parameters.sh -g SECRET_NAME
 Usage: manage_parameters.sh -d SECRET_NAME
 Lists (-l), creates (-c), gets (-g), or deletes (-d) a secret.

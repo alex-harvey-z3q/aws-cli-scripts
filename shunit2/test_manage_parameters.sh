@@ -18,10 +18,16 @@ test_get_secret() {
 --name foo --with-decryption --query Parameters[].Value" "${cmd[*]}"
 }
 
-test_create_and_secret() {
+test_create_secret() {
   main -c 'foo' -s 'xxx'
   assertEquals "aws ssm put-parameter \
 --name foo --value xxx --type String" "${cmd[*]}"
+}
+
+test_create_secret_with_tier() {
+  main -c 'foo' -s 'xxx' -t 'Advanced'
+  assertEquals "aws ssm put-parameter \
+--name foo --value xxx --type String --tier Advanced" "${cmd[*]}"
 }
 
 test_delete_secret_name_only() {

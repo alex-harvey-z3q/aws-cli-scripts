@@ -28,10 +28,8 @@ _ip_perm() {
 }
 
 _revoke_security_group_gress() {
-  set -x
-  aws ec2 revoke-security-group-"$2" \
-    --group-id "$1" --ip-permissions "$3"
-  set +x
+  (set -x ; aws ec2 revoke-security-group-"$2" \
+    --group-id "$1" --ip-permissions "$3")
 }
 
 describe_security_groups() {

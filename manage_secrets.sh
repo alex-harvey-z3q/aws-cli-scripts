@@ -19,10 +19,12 @@ get_opts() {
   local opt OPTARG OPTIND
   [ -z "$1" ] && usage
 
+  [[ -z "$1" ]] && usage
+
   cmd=(aws secretsmanager)
 
   while getopts "hD:s:lg:c:r:u:d:" opt ; do
-    case $opt in
+    case "$opt" in
       h) usage ;;
       D) secret_desc="$OPTARG" ;;
       s) secret="$OPTARG" ;;
@@ -36,7 +38,8 @@ get_opts() {
         usage ;;
     esac
   done
-  shift $((OPTIND-1))
+
+  shift "$((OPTIND-1))"
 }
 
 _in_cmd() {
@@ -47,24 +50,26 @@ post_process_opts() {
   _in_cmd "list-secrets" && return
 
   if _in_cmd "get-secret-value" ; then
-    [ -n "$secret" ] && usage
-    [ -n "$secret_desc" ] && usage
-    cmd+=(--query 'SecretString' --output 'text')
+    [[ -n "$secret" ]] && usage
+    [[ -n "$secret_desc" ]] && usage
+    cmd+=(--query "SecretString" --output "text")
   fi
 
   if _in_cmd "create-secret" ; then
-    [ -z "$secret" ] && usage
-    [ -n "$secret_desc" ] && cmd+=(--description "$secret_desc")
+    [[ -z "$secret" ]] && usage
+    [[ -n "$secret_desc" ]] && cmd+=(--description "$secret_desc")
     cmd+=(--secret-string "$secret")
   fi
 
   if _in_cmd "update-secret" ; then
-    [ -z "$secret" ] && usage
+    [[ -z "$secret" ]] && usage
     cmd+=(--secret-string "$secret")
   fi
 }
 
-manage_secret() { "${cmd[@]}" ; }
+manage_secret() {
+  (set -x ; "${cmd[@]}")
+}
 
 main() {
   get_opts "$@"
@@ -72,6 +77,6 @@ main() {
   manage_secret
 }
 
-if [ "$0" == "${BASH_SOURCE[0]}" ] ; then
+if [[ "$0" == "${BASH_SOURCE[0]}" ]] ; then
   main "$@"
 fi

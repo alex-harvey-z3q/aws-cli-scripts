@@ -38,13 +38,15 @@ get_opts() {
   shift $((OPTIND-1))
 }
 
-manage_parameter() { "${cmd[@]}" ; }
+manage_parameter() {
+  (set -x ; "${cmd[@]}")
+}
 
 main() {
   get_opts "$@"
   manage_parameter
 }
 
-if [ "$0" == "${BASH_SOURCE[0]}" ] ; then
+if [[ "$0" == "${BASH_SOURCE[0]}" ]] ; then
   main "$@"
 fi

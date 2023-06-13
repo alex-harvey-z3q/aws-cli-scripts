@@ -11,6 +11,15 @@ Run the installer:
 ▶ make install
 ```
 
+## sg_in_use.sh
+
+usage() {
+
+```text
+▶ sg_in_use.sh -h
+Usage: sg_in_use.sh SG_ID
+```
+
 ## manage_secrets.sh
 
 This is a shell script wrapper for AWS Secrets Manager, exposing commonly-needed options in an easy-to-use interface.

@@ -58,11 +58,52 @@ revoke_ip_permissions() {
   done
 }
 
+_referencing_groups() {
+  local group_id="$1"
+  aws ec2 describe-security-groups --query 'SecurityGroups[*].[GroupId, IpPermissions[*].[UserIdGroupPairs[?GroupId==`'"$group_id"'`]]]' --output text | grep -v None | cut -f 1
+}
+
+_revoke_referencing_rule() {
+  local len gress
+
+  referencing_group_id="$1"
+  gress="$2"
+
+  case "$gress" in
+    ingress) key="IpPermissions"       ;;
+    egress)  key="IpPermissionsEgress" ;;
+  esac
+
+  len="$(_length "$key")"
+  [[ $len -eq 0 ]] && return
+
+  for index in $(seq 0 "$((len-1))") ; do
+    ip_perm="$(_ip_perm "$index" "IpPermissions")"
+    if echo "$ip_perm" | jq -e --arg target_group_id "$group_id" '.UserIdGroupPairs[] | select(.GroupId==$target_group_id)' > /dev/null ; then
+      _revoke_security_group_gress "$referencing_group_id" "ingress" "$ip_perm"
+    fi
+  done
+
+}
+
+revoke_referencing_rules() {
+  local referencing_groups referencing_group_id len ip_perm index
+
+  read -ra referencing_groups <<< "$(_referencing_groups "$group_id")"
+
+  for referencing_group_id in "${referencing_groups[@]}" ; do
+    describe_security_groups "$referencing_group_id" > "$groups_temp"
+    _revoke_referencing_rule "$referencing_group_id" "ingress"
+    _revoke_referencing_rule "$referencing_group_id" "egress"
+  done
+}
+
 main() {
   get_opts "$@"
   describe_security_groups "$group_id" > "$groups_temp"
   revoke_ip_permissions "$group_id" "ingress"
   revoke_ip_permissions "$group_id" "egress"
+  revoke_referencing_rules "$group_id"
   rm -f "$groups_temp"
 }
 

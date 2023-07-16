@@ -19,6 +19,7 @@ tearDown() {
   rm -f expected_log commands_log
 }
 
+# TODO. This does not test recent changes to revoke referring SGs.
 test_simplest() {
   main "sg-11111111" 2> /dev/null
 
@@ -26,6 +27,7 @@ test_simplest() {
 aws ec2 describe-security-groups --group-id sg-11111111
 aws ec2 revoke-security-group-egress --group-id sg-11111111 --ip-permissions {"FromPort":80,"IpProtocol":"tcp","IpRanges":[{"CidrIp":"10.140.6.112/32","Description":"foo"},{"CidrIp":"10.140.6.159/32","Description":"bar"}],"Ipv6Ranges":[],"PrefixListIds":[],"ToPort":80,"UserIdGroupPairs":[]}
 aws ec2 revoke-security-group-egress --group-id sg-11111111 --ip-permissions {"FromPort":49152,"IpProtocol":"udp","IpRanges":[{"CidrIp":"10.23.99.20/32","Description":"baz"},{"CidrIp":"10.22.199.21/32","Description":"qux"}],"Ipv6Ranges":[],"PrefixListIds":[],"ToPort":65535,"UserIdGroupPairs":[]}
+aws ec2 describe-security-groups --query SecurityGroups[*].[GroupId, IpPermissions[*].[UserIdGroupPairs[?GroupId==`sg-11111111`]]] --output text
 EOF
 
   assertDiffEquals expected_log commands_log

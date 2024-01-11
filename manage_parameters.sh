@@ -3,6 +3,7 @@
 # This is a shell script wrapper for AWS System Manager, exposing commonly-needed options in an easy-to-use interface.
 
 export AWS_DEFAULT_OUTPUT="text"
+export MSYS_NO_PATHCONV=1  # Need for Git-for-Windows see https://github.com/git-for-windows/build-extra/blob/main/ReleaseNotes.md#known-issues
 
 usage() {
   echo "Usage: $0 [-h] [-l]

@@ -17,7 +17,7 @@ usage() {
 
 ```text
 ▶ sg_in_use.sh -h
-Usage: sg_in_use.sh SG_ID
+Usage: sg_in_use.sh SG_ID [-e | --exhaustive]
 ```
 
 ## manage_secrets.sh
@@ -26,9 +26,12 @@ This is a shell script wrapper for AWS Secrets Manager, exposing commonly-needed
 
 ```text
 ▶ manage_secrets.sh -h
-Usage: manage_secrets.sh [-h] [-l]
+Usage: manage_secrets.sh [-h] [-l] [--arn]
+Usage: manage_secrets.sh -l
+Usage: manage_secrets.sh -l --arn
 Usage: manage_secrets.sh -g SECRET_NAME
 Usage: manage_secrets.sh -c SECRET_NAME -D SECRET_DESC -s SECRET
+Usage: manage_secrets.sh -c SECRET_NAME -D SECRET_DESC -s file://MYSECRET_FILE
 Usage: manage_secrets.sh -r SECRET_NAME
 Usage: manage_secrets.sh -u SECRET_NAME -s SECRET
 Usage: manage_secrets.sh -d SECRET_NAME

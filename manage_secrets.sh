@@ -6,9 +6,12 @@ export AWS_DEFAULT_OUTPUT="text"
 export MSYS_NO_PATHCONV=1  # Need for Git-for-Windows see https://github.com/git-for-windows/build-extra/blob/main/ReleaseNotes.md#known-issues
 
 usage() {
-  echo "Usage: $0 [-h] [-l]
+  echo "Usage: $0 [-h] [-l] [--arn]
+Usage: $0 -l
+Usage: $0 -l --arn
 Usage: $0 -g SECRET_NAME
 Usage: $0 -c SECRET_NAME -D SECRET_DESC -s SECRET
+Usage: $0 -c SECRET_NAME -D SECRET_DESC -s file://MYSECRET_FILE
 Usage: $0 -r SECRET_NAME
 Usage: $0 -u SECRET_NAME -s SECRET
 Usage: $0 -d SECRET_NAME
@@ -17,19 +20,22 @@ Lists (-l), creates (-c), updates (-u), rotates (-r), or deletes (-d) a secret."
 }
 
 get_opts() {
-  local opt OPTARG OPTIND
-  [ -z "$1" ] && usage
-
+  local opt OPTARG OPTIND l_query
   [[ -z "$1" ]] && usage
 
   cmd=(aws secretsmanager)
+
+  l_query="SecretList[].[Name,Description]"
+  if grep -q -- "--arn" "$@" ; then
+    l_query="SecretList[].[Name,Arn,Description]"
+  fi
 
   while getopts "hD:s:lg:c:r:u:d:" opt ; do
     case "$opt" in
       h) usage ;;
       D) secret_desc="$OPTARG" ;;
       s) secret="$OPTARG" ;;
-      l) cmd+=(list-secrets     --query      'SecretList[].[Name,Description]') ;;
+      l) cmd+=(list-secrets     --query     "$l_query") ;;
       g) cmd+=(get-secret-value --secret-id  "$OPTARG") ;;
       c) cmd+=(create-secret    --name       "$OPTARG") ;;
       r) cmd+=(rotate-secret    --secret-id  "$OPTARG") ;;

@@ -12,6 +12,12 @@ test_list_secrets() {
 SecretList[].[Name,Description]" "${cmd[*]}"
 }
 
+test_list_secrets_arn() {
+  main -l --arn
+  assertEquals "aws secretsmanager list-secrets --query \
+SecretList[].[Name,ARN,Description]" "${cmd[*]}"
+}
+
 test_get_secret() {
   main -g 'foo'
   assertEquals "aws secretsmanager get-secret-value \

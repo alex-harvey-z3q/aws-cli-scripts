@@ -16,15 +16,14 @@ get_opts() {
 }
 
 _length() {
-  jq '
-    .SecurityGroups[0].'"$1"' | length
-  ' "$groups_temp"
+  local key="$1"
+  jq --arg k "$key" '.SecurityGroups[0][$k] | length' "$groups_temp"
 }
 
 _ip_perm() {
-  jq -c '
-    .SecurityGroups[0].'"$2"'['"$1"']
-  ' "$groups_temp"
+  local index="$1"
+  local key="$2"
+  jq -c --arg i "$index" --arg k "$key" '.SecurityGroups[0][$k][$i | tonumber]' "$groups_temp"
 }
 
 _revoke_security_group_gress() {

@@ -2,6 +2,7 @@
 
 alex:
 	@echo was here
+	@echo was also here
 
 install:
 	@bash install.sh

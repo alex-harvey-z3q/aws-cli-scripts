@@ -1,5 +1,8 @@
 .PHONY: install lint test docs
 
+alex:
+	@echo was here
+
 install:
 	@bash install.sh
 

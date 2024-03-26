@@ -20,3 +20,6 @@ test:
 
 docs:
 	ruby docs/_generate.rb
+
+alex_2:
+	@echo also was here!
